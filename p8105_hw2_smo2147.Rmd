@@ -22,7 +22,13 @@ pls_month_df =
       "04" ~ "apr", "05" ~ "may", "06" ~ "june",
       "07" ~ "july", "08" ~ "aug", "09" ~ "sept",
       "10" ~ "oct", "11" ~ "nov", "12" ~ "dec",
-  ))
+  )) |> 
+  mutate(president = case_when(
+         prez_gop == 1 ~ "gop",
+         prez_dem == 1 ~ "dom")
+         ) |> 
+  relocate(year, month, day, president) |> 
+  select(-prez_gop, -prez_dem)
   
 ```
 
