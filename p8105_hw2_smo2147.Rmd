@@ -5,4 +5,26 @@ date: "2025-10-01"
 output: github_document
 ---
 
+```{r setup}
+library(tidyverse)
+```
+
+
+```{r}
+pls_month_df =
+  read_csv("./Data/FiveThirtyEight/pols-month.csv", na = c("NA", ".", "")) |> 
+  janitor::clean_names() |> 
+  separate(mon, sep = "-", into = c("year", "month", "day")) |> 
+  mutate(
+    month = case_match(
+      month,
+      "01" ~ "jan", "02" ~ "feb", "03" ~ "mar",
+      "04" ~ "apr", "05" ~ "may", "06" ~ "june",
+      "07" ~ "july", "08" ~ "aug", "09" ~ "sept",
+      "10" ~ "oct", "11" ~ "nov", "12" ~ "dec",
+  ))
+  
+```
+
+
 
