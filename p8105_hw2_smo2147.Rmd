@@ -38,7 +38,16 @@ pls_month_df =
 stock_market_df =
   read_csv("./Data/FiveThirtyEight/snp.csv", na =c("NA", ".", "")) |> 
   janitor::clean_names() |> 
-  separate(date, sep = "/", into = c("month", "day", "year"))
+  separate(date, sep = "/", into = c("month", "day", "year")) |> 
+  mutate(month = case_match(
+    month,
+      "1" ~ "jan", "2" ~ "feb", "3" ~ "mar",
+      "4" ~ "apr", "5" ~ "may", "6" ~ "june",
+      "7" ~ "july", "8" ~ "aug", "9" ~ "sept",
+      "10" ~ "oct", "11" ~ "nov", "12" ~ "dec",
+  )) |> 
+  relocate(year, month, day) |> 
+  select(-day) 
   
 ```
 
