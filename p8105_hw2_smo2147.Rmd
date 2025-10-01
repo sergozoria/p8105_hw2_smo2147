@@ -47,8 +47,7 @@ stock_market_df =
       "10" ~ "oct", "11" ~ "nov", "12" ~ "dec",
   )) |> 
   relocate(year, month, day) |> 
-  select(-day) 
-  
+  select(-day)
 ```
 
 
