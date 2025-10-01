@@ -28,9 +28,18 @@ pls_month_df =
          prez_gop == 0 ~ "dem")
          ) |> 
   relocate(year, month, day, president) |> 
-  select(-prez_gop, -prez_dem)
+  select(-day, -prez_gop, -prez_dem)
   
 ```
 
+
+
+```{r}
+stock_market_df =
+  read_csv("./Data/FiveThirtyEight/snp.csv", na =c("NA", ".", "")) |> 
+  janitor::clean_names() |> 
+  separate(date, sep = "/", into = c("month", "day", "year"))
+  
+```
 
 
