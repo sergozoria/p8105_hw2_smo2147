@@ -58,6 +58,12 @@ stock_market_df =
 ```{r}
 unemp_df =
   read_csv("./Data/FiveThirtyEight/unemployment.csv", na = c("NA", ".", "")) |> 
-  janitor::clean_names()
+  janitor::clean_names() |> 
+  pivot_longer(
+    jan:dec,
+    names_to = "month",
+    values_to = "unemp_rate"
+  )
+  
 ```
 
