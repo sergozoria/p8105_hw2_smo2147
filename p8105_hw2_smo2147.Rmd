@@ -16,7 +16,7 @@ library(readxl)
 
 # Problem 1
 
-#### Cleaning the `pols-month.csv` dataset 
+#### Cleaning the National Politician Dataset 
 
 ```{r tidying pls dataset, message =  FALSE}
 pls_month_df =
@@ -36,7 +36,7 @@ pls_month_df =
   arrange(year, month)
 ```
 
-#### Cleaning the `snp.csv` dataset 
+#### Cleaning the Stock Market Index Dataset 
 
 ```{r tidying snp dataset, message =  FALSE}
 stock_market_df =
@@ -56,7 +56,7 @@ stock_market_df =
   arrange(year, month)
 ```
 
-#### Tidying the `umeployment` dataset
+#### Tidying the Unemployment Dataset
 
 ```{r tidying unemp dataset, message =  FALSE}
 unemp_df =
@@ -74,7 +74,7 @@ unemp_df =
   relocate(year, month)
 ```
 
-#### Merging `snp`, `pols` and `unemployment` datasets
+#### Merging National Politician, Stock Market, and Unemployment Datasets
 
 ```{r tidying merged dataset, message =  FALSE}
 pls_snp_unemp_df =
@@ -103,8 +103,16 @@ Lastly, we merged the politician, stock market, and employment datasets describe
 
 # Problem 2
 
-```{r}
+#### Cleaning the Trash Wheel Dataset 
 
+```{r tidying trash wheel dataset}
+mr_wheel_df =
+  read_excel("./Data/TrashWheel/trashwheel_datasets.xlsx", 
+             sheet = "Mr. Trash Wheel", 
+             range = "A2:N655", 
+             na = c("NA", ".", "")) |> 
+  janitor::clean_names() |> 
+  mutate(sports_balls = 
+           as.integer(round(sports_balls, 0)))
 ```
-
 
