@@ -107,9 +107,9 @@ Lastly, we merged the politician, stock market, and employment datasets describe
 
 ```{r tidying trash wheel dataset}
 mr_twheel_df =
-  read_excel("./Data/TrashWheel/trashwheel_datasets.xlsx", 
+  read_excel("./Data/TrashWheel/trashwheel_collection_data.xlsx", 
              sheet = "Mr. Trash Wheel", 
-             range = "A2:N655", 
+             range = "A2:N710", 
              na = c("NA", ".", "")) |> 
   janitor::clean_names() |>
   select(-month, -year) |> 
@@ -128,9 +128,9 @@ mr_twheel_df =
 
 ```{r}
 prof_twheel_df =
-  read_excel("./Data/TrashWheel/trashwheel_datasets.xlsx", 
+  read_excel("./Data/TrashWheel/trashwheel_collection_data.xlsx", 
              sheet = "Professor Trash Wheel", 
-             range = "A2:M123", 
+             range = "A2:M135", 
              na = c("NA", ".", "")) |> 
   janitor::clean_names() |>
   select(-month, -year) |> 
@@ -141,16 +141,16 @@ prof_twheel_df =
     month = factor(month,
                    levels = 1:12,
                    labels = tolower(month.abb))) |> 
-   filter(!is.na(dumpster), dumpster != 119)
+   filter(!is.na(dumpster))
 ```
 
 #### Cleaning the Gwynnda Trash Wheel Sheet
 
 ```{r}
-gwynnda_twheel_df =
-  read_excel("./Data/TrashWheel/trashwheel_datasets.xlsx", 
-             sheet = "Gwynnda Trash Wheel", 
-             range = "A2:L266", 
+gwyns_twheel_df =
+  read_excel("./Data/TrashWheel/trashwheel_collection_data.xlsx", 
+             sheet = "Gwynns Falls Trash Wheel", 
+             range = "A2:L352", 
              na = c("NA", ".", "")) |> 
   janitor::clean_names() |>
   select(-month, -year) |> 
