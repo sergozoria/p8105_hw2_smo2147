@@ -11,6 +11,7 @@ output: github_document
 
 ```{r setup, message =  FALSE}
 library(tidyverse)
+library(readxl)
 ```
 
 # Problem 1
@@ -99,3 +100,11 @@ As for the **`unemp_df`** dataset, it contains information about the unemploymen
 ###### Description of Merged Politician, Stock Market, and Unemployment Datasets
 
 Lastly, we merged the politician, stock market, and employment datasets described above using the **`left_join`** function for the combined dataset **`pls_snp_unemp_df`**. After merging these datasets, we get a year range from  **`r pls_snp_unemp_df |> pull(year) |> min()`** to **`r pls_snp_unemp_df |> pull(year) |> max()`**. It also contains **`r nrow(pls_snp_unemp_df)`**  observations and **`r ncol(pls_snp_unemp_df)`** variables. Key variables that are important to this merged dataset include the **`year`**, **`month`**, **`president`**, **`close`**, and **`unemp_rate`** variables, which provides a big picture overview of what the closing values of the stock market and unemployment rates were for each sitting president, either democratic or republican on the associated year and month.
+
+# Problem 2
+
+```{r}
+
+```
+
+
