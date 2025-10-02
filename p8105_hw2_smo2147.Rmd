@@ -79,3 +79,11 @@ pls_snp_unemp_df =
   arrange(year, month)
 ```
 
+#### Explanation of datasets
+
+###### Description of National Democratic and Republic Politician Dataset
+
+To start with dataset `pls_month_df`, it contained information about national politicians who are either democratic or republican across across time. The dataset originally had the `mon` variable, indicating the date of count, which I separated into columns `year`, `month`, and `day` using the `separate` function. It also had two variables, `prez_gop` and `prez_dem`, indicating whether sitting president was republican or democratic on the associated date of count, which I mutated into a new variable called `president`.After tidying the dataset, the dataset was left with **`r nrow(pls_month_df)`** observations and **`r ncol(pls_month_df)`** variables. The range of years for national politicians goes from **`r pls_month_df |> pull(year) |> min()`** to **`r pls_month_df |> pull(year) |> max()`**, which tell us the year of observation. Aong with the `year` variable, we get more information from the `month` and `president` variables, which also indicate the month of observation and indication of whether the president was republican or democratic at the time of observation. 
+
+
+The range of years covered in the dataset, `pls_snp_unemp_df`, ranges from **`r pls_snp_unemp_df |> pull(year) |> min()`** to **`r pls_snp_unemp_df |> pull(year) |> max()`**. It also contains **`r nrow(pls_snp_unemp_df)`**  rows and **`r ncol(pls_snp_unemp_df)`** columns. Key variables that are important to this dataset include the `year`, `month`, `president`, `close`, and `unemp_rate` variables
