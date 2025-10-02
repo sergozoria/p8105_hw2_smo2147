@@ -81,15 +81,15 @@ pls_snp_unemp_df =
   arrange(year, month)
 ```
 
-#### Explanation of datasets
+#### Explanation of Politician, Stock Market, and Unemployment Datasets
 
 ###### Description of National Democratic and Republic Politician Dataset
 
-To start with dataset **`pls_month_df`**, it contained information about national politicians who are either democratic or republican across across time. The dataset originally had the **`mon`** variable, indicating the date of count, which I separated into columns **`year`**, **`month`**, and **`day`** using the **`separate`** function. It also had two variables, **`prez_gop`** and **`prez_dem`**, indicating whether sitting president was republican or democratic on the associated date of count, which I mutated into a new variable called **`president`**.After tidying the dataset, the dataset was left with **`r nrow(pls_month_df)`** observations and **`r ncol(pls_month_df)`** variables. The range of years for national politicians goes from **`r pls_month_df |> pull(year) |> min()`** to **`r pls_month_df |> pull(year) |> max()`**, which tell us the year of observation. Along with the **`year`** variable, we get more information from the **`month`** and **`president`** variables, which also indicate the month of observation and indication of whether the president was republican or democratic at the time of observation. 
+To start with dataset **`pls_month_df`**, it contains information about national politicians who are either democratic or republican across across time. The dataset originally had the **`mon`** variable, indicating the date of count, which I separated into columns **`year`**, **`month`**, and **`day`** using the **`separate`** function. It also had two variables, **`prez_gop`** and **`prez_dem`**, indicating whether sitting president was republican or democratic on the associated date of count, which I mutated into a new variable called **`president`**. After tidying the dataset, the dataset was left with **`r nrow(pls_month_df)`** observations and **`r ncol(pls_month_df)`** variables. The range of years for national politicians goes from **`r pls_month_df |> pull(year) |> min()`** to **`r pls_month_df |> pull(year) |> max()`**, which tell us the year of observation. Along with the **`year`** variable, we get more information from the **`month`** and **`president`** variables, which also indicate the month of observation and indication of whether the president was republican or democratic at the time of observation. The remaining variables in this dataset gives us information about republican and democratic representatives, governors, and senators on the associated year and month of observation. 
 
 ###### Description of Standard & Poor’s Stock Market Index Dataset
 
-
+The **`stock_market_df`** dataset contains information about the market index, which gives you a representative measure of the stock market at the time of observation. The dataset originally had the **`date`** variable, indicating the date of observation, which I separated into columns **`year`**, **`month`**, and **`day`** using the **`separate`** function. After tidying the dataset, the dataset was left with **`r nrow(stock_market_df)`** observations and **`r ncol(stock_market_df)`** variables.  The range of years for the closing values of the S&P stock index goes from **`r stock_market_df |> pull(year) |> min()`** to **`r stock_market_df |> pull(year) |> max()`**, which tell us the year of observation. These variable basically gives us insight on the closing values of the stock market index based on the associated date, as depicted by the **`close`** variable at the end of the **`year`** and **`month`** observations. 
 
 ###### Description of Unemployment Rate Dataset
 
