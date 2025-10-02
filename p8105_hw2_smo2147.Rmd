@@ -20,21 +20,17 @@ pls_month_df =
   read_csv("./Data/FiveThirtyEight/pols-month.csv", na = c("NA", ".", "")) |> 
   janitor::clean_names() |> 
   separate(mon, sep = "-", into = c("year", "month", "day")) |>
-  arrange(year, month, day) |> 
   mutate(across(year:day, as.integer),
-    month = case_match(
-      month,
-      1 ~ "jan", 2 ~ "feb", 3 ~ "mar",
-      4 ~ "apr", 5 ~ "may", 6 ~ "jun",
-      7 ~ "jul", 8 ~ "aug", 9 ~ "sept",
-      10 ~ "oct", 11 ~ "nov", 12 ~ "dec"
-    )) |> 
+         month = factor(month,
+                        levels = 1:12,
+                        labels = tolower(month.abb))) |> 
   mutate(president = case_when(
          prez_gop == 1 ~ "gop",
          prez_gop == 0 ~ "dem",
-         )) |> 
+         TRUE ~ NA_character_ )) |> 
   relocate(year, month, president) |> 
-  select(-day, -prez_gop, -prez_dem) 
+  select(-day, -prez_gop, -prez_dem) |> 
+  arrange(year, month)
 ```
 
 #### Cleaning the `snp.csv` dataset 
@@ -44,17 +40,17 @@ stock_market_df =
   read_csv("./Data/FiveThirtyEight/snp.csv", na = c("NA", ".", "")) |> 
   janitor::clean_names() |> 
   separate(date, sep = "/", into = c("month", "day", "year")) |> 
-  mutate(across(c(month, day, year), as.integer),
-    year = ifelse(year <= 49, year + 2000, year + 1900)) |> 
-  arrange(year, month) |> 
-  select(year, month, close, everything(), -day) |> 
   mutate(
-    month = case_match(month,
-      1 ~ "jan", 2 ~ "feb", 3 ~ "mar",
-      4 ~ "apr", 5 ~ "may", 6 ~ "jun",
-      7 ~ "jul", 8 ~ "aug", 9 ~ "sept",
-      10 ~ "oct", 11 ~ "nov", 12 ~ "dec",
-  ))
+    across(month:year, as.integer),
+    year = ifelse(year 
+                  <= 49, year + 2000, 
+                  year + 1900),
+    month = factor(month, 
+                   levels = 1:12, 
+                   labels = tolower(month.abb))) |> 
+  relocate(year) |> 
+  select(-day) |> 
+  arrange(year, month)
 ```
 
 #### Tidying the `umeployment` dataset
@@ -67,15 +63,18 @@ unemp_df =
     jan:dec,
     names_to = "month",
     values_to = "unemp_rate") |> 
-  mutate(year = as.integer(year)) 
-  
+  mutate(
+    year = as.integer(year),
+    month = factor(month,
+                   labels = tolower(month.abb))) |> 
+  arrange(year, month)
 ```
 
 #### Merging `snp`, `pols` and `unemployment` datasets
 
 ```{r tidying merged dataset, message =  FALSE}
 pls_snp_unemp_df =
-  left_join(pls_month_df, stock_market_df, by = c("year", "month")) |> 
+  left_join(pls_month_df, stock_market_df, by = c("year", "month")) |>
   left_join(unemp_df, by = c("year", "month")) |> 
   arrange(year, month)
 ```
