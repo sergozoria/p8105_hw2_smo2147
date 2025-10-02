@@ -10,24 +10,25 @@ library(tidyverse)
 ```
 
 
+
 ```{r}
 pls_month_df =
   read_csv("./Data/FiveThirtyEight/pols-month.csv", na = c("NA", ".", "")) |> 
   janitor::clean_names() |> 
   separate(mon, sep = "-", into = c("year", "month", "day")) |> 
-  mutate(
+  mutate(across(year:day, as.integer),
     month = case_match(
       month,
-      "01" ~ "jan", "02" ~ "feb", "03" ~ "mar",
-      "04" ~ "apr", "05" ~ "may", "06" ~ "june",
-      "07" ~ "july", "08" ~ "aug", "09" ~ "sept",
-      "10" ~ "oct", "11" ~ "nov", "12" ~ "dec",
-  )) |> 
+      1 ~ "jan", 2 ~ "feb", 3 ~ "mar",
+      4 ~ "apr", 5 ~ "may", 6 ~ "june",
+      7 ~ "july", 8 ~ "aug", 9 ~ "sept",
+      10 ~ "oct", 11 ~ "nov", 12 ~ "dec"
+    )) |> 
   mutate(president = case_when(
          prez_gop == 1 ~ "gop",
-         prez_gop == 0 ~ "dem")
-         ) |> 
-  relocate(year, month, day, president) |> 
+         prez_gop == 0 ~ "dem",
+         )) |> 
+  relocate(year, month, president) |> 
   select(-day, -prez_gop, -prez_dem)
   
 ```
@@ -36,18 +37,24 @@ pls_month_df =
 
 ```{r}
 stock_market_df =
-  read_csv("./Data/FiveThirtyEight/snp.csv", na =c("NA", ".", "")) |> 
+  read_csv("./Data/FiveThirtyEight/snp.csv", na = c("NA", ".", "")) |> 
   janitor::clean_names() |> 
   separate(date, sep = "/", into = c("month", "day", "year")) |> 
-  mutate(month = case_match(
-    month,
-      "1" ~ "jan", "2" ~ "feb", "3" ~ "mar",
-      "4" ~ "apr", "5" ~ "may", "6" ~ "june",
-      "7" ~ "july", "8" ~ "aug", "9" ~ "sept",
-      "10" ~ "oct", "11" ~ "nov", "12" ~ "dec",
+  mutate(across(
+    month:year, as.integer),
+    month = case_match(month,
+      1 ~ "jan", 2 ~ "feb", 3 ~ "mar",
+      4 ~ "apr", 5 ~ "may", 6 ~ "june",
+      7 ~ "july", 8 ~ "aug", 9 ~ "sept",
+      10 ~ "oct", 11 ~ "nov", 12 ~ "dec",
   )) |> 
   relocate(year, month, day) |> 
   select(-day)
 ```
 
+
+
+```{r}
+
+```
 
