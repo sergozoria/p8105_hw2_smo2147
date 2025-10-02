@@ -105,7 +105,7 @@ Lastly, we merged the politician, stock market, and employment datasets describe
 
 #### Cleaning the Mr. Trash Wheel Sheet
 
-```{r tidying trash wheel dataset}
+```{r cleaning trash wheel dataset}
 mr_twheel_df =
   read_excel("./Data/TrashWheel/trashwheel_collection_data.xlsx", 
              sheet = "Mr. Trash Wheel", 
@@ -129,7 +129,7 @@ mr_twheel_df =
 
 #### Cleaning the Professor Trash Wheel Sheet
 
-```{r}
+```{r cleaning professor trash sheet}
 prof_twheel_df =
   read_excel("./Data/TrashWheel/trashwheel_collection_data.xlsx", 
              sheet = "Professor Trash Wheel", 
@@ -151,7 +151,7 @@ prof_twheel_df =
 
 #### Cleaning the Gwynns Falls Trash Wheel Sheet
 
-```{r}
+```{r cleaning gwynns fall sheet}
 gwynns_twheel_df =
   read_excel("./Data/TrashWheel/trashwheel_collection_data.xlsx", 
              sheet = "Gwynns Falls Trash Wheel", 
@@ -173,7 +173,7 @@ gwynns_twheel_df =
 
 #### Combining Mister, Professor, and Gwynns Trash Wheel Datasets
 
-```{r}
+```{r combining trash sheets}
 twheel_tidy =
   bind_rows(mr_twheel_df, prof_twheel_df, gwynns_twheel_df) |> 
   pivot_longer(
@@ -183,9 +183,13 @@ twheel_tidy =
   )
 ```
 
-##### Total Weight Trash Collected by Professor Trash Wheel
+##### Description of Trash Wheel Datasets
 
-```{r}
+The **`twheel_tidy`** dataset contains **`r nrow(twheel_tidy)`** observations and **`r ncol(twheel_tidy)`** variables gathered from three distinct datasets using the **`bind_rows`** function. These datasets were the Mr. Trash Wheel, Professor Trash Wheel, and Gwynns Falls Trash Wheel. The combined dataset was reshaped into a longer format using the **`pivot_longer`** function to organize the trash by type, as depicted in the new variables added in **`twheel_tidy`** (i.e., **`trash_type`** and **`tt_count`**). As a result, the number of rows is larger than the number of original dumpsters. Each record in the dataset includes the wheel name, the associated data of observations, including **`year`**, **`month`**, and **`day`**, the total weight of trash (i.e., **`weight_tons`**), and the type of trash (i.e.,**`trash_type`**) as well as its count (i.e., **`tt_count`**). Altogether, this combined dataset allows for comparisons across wheel and trash types.
+
+###### Total Weight Trash Collected by Professor Trash Wheel
+
+```{r calculating total weight trash by prof trash}
 twheel_tidy |> 
   group_by(wheel_name) |> 
   filter(wheel_name == "prof_trash_wheel") |> 
@@ -193,13 +197,16 @@ twheel_tidy |>
   summarize(prof_total_weight = sum(weight_tons, na.rm = TRUE))
 ```
 
-##### Total Number of Cigarette Butts Collected by Gwynns
+Based on the available data, the total weight of trash collected by Professor Trash Wheel is **282**. 
 
-```{r}
+###### Total Number of Cigarette Butts Collected by Gwynns
+
+```{r calculating total number of cigs by gwynns}
 twheel_tidy |> 
   group_by(wheel_name) |> 
-  filter(wheel_name == "gwynns_falls", trash_type == "cigarette_butts") |> 
+  filter(wheel_name == "gwynns_falls", year == "2022", month == "jun", trash_type == "cigarette_butts") |> 
   distinct(dumpster, year, month, day, trash_type, tt_count) |> 
   summarize(gwynns_total_cigs = sum(tt_count, na.rm = TRUE))
 ```
 
+Based on the available data, the total number of cigarette butts collected by Gwynns in June of 2022 was **18,120**.
