@@ -126,6 +126,7 @@ mr_twheel_df =
   filter(!is.na(dumpster))
 ```
 
+
 #### Cleaning the Professor Trash Wheel Sheet
 
 ```{r}
@@ -172,4 +173,33 @@ gwynns_twheel_df =
 
 #### Combining Mister, Professor, and Gwynns Trash Wheel Datasets
 
+```{r}
+twheel_tidy =
+  bind_rows(mr_twheel_df, prof_twheel_df, gwynns_twheel_df) |> 
+  pivot_longer(
+    plastic_bottles:sports_balls,
+    names_to = "trash_type",
+    values_to = "tt_count"
+  )
+```
+
+##### Total Weight Trash Collected by Professor Trash Wheel
+
+```{r}
+twheel_tidy |> 
+  group_by(wheel_name) |> 
+  filter(wheel_name == "prof_trash_wheel") |> 
+  distinct(dumpster, year, month, day, weight_tons) |> 
+  summarize(prof_total_weight = sum(weight_tons, na.rm = TRUE))
+```
+
+##### Total Number of Cigarette Butts Collected by Gwynns
+
+```{r}
+twheel_tidy |> 
+  group_by(wheel_name) |> 
+  filter(wheel_name == "gwynns_falls", trash_type == "cigarette_butts") |> 
+  distinct(dumpster, year, month, day, trash_type, tt_count) |> 
+  summarize(gwynns_total_cigs = sum(tt_count, na.rm = TRUE))
+```
 
