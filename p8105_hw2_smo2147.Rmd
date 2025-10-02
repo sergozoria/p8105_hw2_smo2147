@@ -148,7 +148,7 @@ prof_twheel_df =
   filter(!is.na(dumpster))
 ```
 
-#### Cleaning the Gwynnda Trash Wheel Sheet
+#### Cleaning the Gwynns Falls Trash Wheel Sheet
 
 ```{r}
 gwynns_twheel_df =
@@ -169,5 +169,7 @@ gwynns_twheel_df =
   relocate(wheel_name, dumpster) |> 
   filter(!is.na(dumpster))
 ```
+
+#### Combining Mister, Professor, and Gwynns Trash Wheel Datasets
 
 
