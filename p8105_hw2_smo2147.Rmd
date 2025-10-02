@@ -237,3 +237,10 @@ twheel_tidy |>
 Based on the available data, the total number of cigarette butts collected by Gwynns in June of 2022 was **18,120**.
 
 # Problem 3
+
+```{r}
+zillow_df =
+  read_csv("./Data/zillow_data/zip_codes.csv", na = c("NA", ".", "")) |> 
+  janitor::clean_names()
+```
+
