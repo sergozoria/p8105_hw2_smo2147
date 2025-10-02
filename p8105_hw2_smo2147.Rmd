@@ -42,6 +42,7 @@ stock_market_df =
   separate(date, sep = "/", into = c("month", "day", "year")) |> 
   mutate(across(
     month:year, as.integer),
+    year = ifelse(year <= 49, year + 2000, year + 1900),
     month = case_match(month,
       1 ~ "jan", 2 ~ "feb", 3 ~ "mar",
       4 ~ "apr", 5 ~ "may", 6 ~ "june",
@@ -55,6 +56,8 @@ stock_market_df =
 
 
 ```{r}
-
+unemp_df =
+  read_csv("./Data/FiveThirtyEight/unemployment.csv", na = c("NA", ".", "")) |> 
+  janitor::clean_names()
 ```
 
