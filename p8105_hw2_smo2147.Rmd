@@ -373,3 +373,17 @@ zip_codes_na |> head(10)
 
 One reason zip codes might be missing in the **`zillow_zori_df`** dataset but not in the **`zillow_codes_df`** dataset is because some might be more recent listing, or Zillow simply does not update them frequently. 
 
+###### Rental Prices Comparison 2021 vs 2020
+
+```{r}
+jan_2020 = zillow_joined_df |> 
+  filter(year == 2020, month == "jan") |> 
+  select(zip_code, county, neighborhood, rental_price) |>
+  rename(rent_2020 = rental_price)
+
+jan_2021 = zillow_joined_df |> 
+  filter(year == 2021, month == "jan") |> 
+  select(zip_code, county, neighborhood, rental_price) |>
+  rename(rent_2021 = rental_price)
+```
+
