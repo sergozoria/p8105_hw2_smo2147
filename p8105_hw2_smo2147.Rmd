@@ -277,8 +277,18 @@ zillow_codes_df =
 zillow_zori_df =
   read_csv("./Data/zillow_data/zip_zori_uc_sfrcondomfr_sm_month_NYC.csv",
            na = c("NA", ".", "")) |> 
-  janitor::clean_names()
-
+  janitor::clean_names() |> 
+  pivot_longer(
+    cols = x2015_01_31:x2024_08_31,
+    names_to = "date",
+    names_prefix = "x",
+    values_to = "rental_price") |> 
+  separate(date,
+           sep = "_", 
+           into = c("year", "month", "day")) |> 
+  mutate(across(year:day, as.integer),
+         month = factor(month,
+                        levels = 1:12,
+                        labels = tolower(month.abb)))
 ```
-
 
