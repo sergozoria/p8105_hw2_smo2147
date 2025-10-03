@@ -238,9 +238,30 @@ Based on the available data, the total number of cigarette butts collected by Gw
 
 # Problem 3
 
-```{r}
-zillow_df =
+```{r cleaning zip codes dataset}
+zillow_codes_df =
   read_csv("./Data/zillow_data/zip_codes.csv", na = c("NA", ".", "")) |> 
-  janitor::clean_names()
+  janitor::clean_names() |> 
+  separate(file_date, 
+           sep = "/", 
+           into = c("month", "day", "year")) |> 
+  separate_rows(neighborhood, 
+                sep = "and ") |> 
+  mutate(
+    across(year:day, as.integer),
+    county = case_when(
+      county == "Bronx" ~ "bronx_county",
+      county == "Kings" ~ "kings_county",
+      county == "Queens" ~ "queens_county",
+      county == "Richmond" ~ "richmond_county",
+      county == "New York" ~ "manhattan_county"),
+    neighborhood = neighborhood |> 
+      str_to_lower() |> 
+      str_trim() |> 
+      str_replace_all(" ", "_"),
+    month = factor(month,
+                   levels = 1:12,
+                   labels = tolower(month.abb)))
 ```
+
 
