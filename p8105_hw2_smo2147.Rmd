@@ -371,5 +371,5 @@ zip_codes_na = zillow_codes_df |>
 zip_codes_na |> head(10)
 ```
 
-
+One reason zip codes might be missing in the **`zillow_zori_df`** dataset but not in the **`zillow_codes_df`** dataset is because some might be more recent listing, or Zillow simply does not update them frequently. 
 
