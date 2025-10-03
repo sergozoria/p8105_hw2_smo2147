@@ -360,10 +360,16 @@ zillow_joined_df |>
 
 The final **`zillow_joined_df`** dataset contains **`r nrow(zillow_joined_df)`** observations and **`r ncol(zillow_joined_df)`**. The dataset also contains **`r zillow_joined_df |> distinct(zip_code) |> nrow()`** unique zipcodes and **`r zillow_joined_df |> distinct(neighborhood) |> nrow()`** unique neighborhoods. 
 
-###### Differences in Zip Zodes by Dataset
+###### Zip codes Differences by Dataset
 
-```{r}
+```{r zip codes differences by dataset}
+zip_codes_na = zillow_codes_df |> 
+  distinct(zip_code) |> 
+  anti_join(zillow_zori_df |> 
+              distinct(zip_code), by = "zip_code")
 
+zip_codes_na |> head(10)
 ```
+
 
 
