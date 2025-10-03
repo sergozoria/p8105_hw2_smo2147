@@ -238,7 +238,9 @@ Based on the available data, the total number of cigarette butts collected by Gw
 
 # Problem 3
 
-```{r cleaning zip codes dataset}
+#### Cleaning Zillow Zipcode Dataset 
+
+```{r cleaning zipcode dataset, message = FALSE}
 zillow_codes_df =
   read_csv("./Data/zillow_data/zip_codes.csv", na = c("NA", ".", "")) |> 
   janitor::clean_names() |> 
@@ -262,6 +264,15 @@ zillow_codes_df =
     month = factor(month,
                    levels = 1:12,
                    labels = tolower(month.abb)))
+```
+
+#### Cleaning Zillow ZORI Dataset 
+
+```{r cleaning zillow zori dataset}
+zillow_zori_df =
+  read_csv("./Data/zillow_data/zip_zori_uc_sfrcondomfr_sm_month_NYC.csv",
+           na = c("NA", ".", "")) |> 
+  janitor::clean_names()
 ```
 
 
