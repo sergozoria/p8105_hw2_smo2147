@@ -251,6 +251,10 @@ zillow_codes_df =
                 sep = "and ") |> 
   mutate(
     across(year:day, as.integer),
+    year = ifelse(
+      year <= 49, 
+      year + 2000, 
+      year + 1900),
     county = case_when(
       county == "Bronx" ~ "bronx_county",
       county == "Kings" ~ "kings_county",
@@ -263,16 +267,18 @@ zillow_codes_df =
       str_replace_all(" ", "_"),
     month = factor(month,
                    levels = 1:12,
-                   labels = tolower(month.abb)))
+                   labels = tolower(month.abb))) |> 
+  relocate(year, month, day, county, neighborhood, zip_code)
 ```
 
 #### Cleaning Zillow ZORI Dataset 
 
-```{r cleaning zillow zori dataset}
+```{r cleaning zillow zori dataset, message = FALSE}
 zillow_zori_df =
   read_csv("./Data/zillow_data/zip_zori_uc_sfrcondomfr_sm_month_NYC.csv",
            na = c("NA", ".", "")) |> 
   janitor::clean_names()
+
 ```
 
 
