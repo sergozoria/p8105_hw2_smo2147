@@ -268,7 +268,9 @@ zillow_codes_df =
     month = factor(month,
                    levels = 1:12,
                    labels = tolower(month.abb))) |> 
-  relocate(year, month, day, county, neighborhood, zip_code)
+  relocate(
+    zip_code, county, year, 
+    month, day, neighborhood, everything())
 ```
 
 #### Cleaning Zillow ZORI Dataset 
@@ -303,16 +305,19 @@ zillow_zori_df =
       county_name == "New York County" ~ "manhattan_county"),
     city = case_when(
       city == "New York" ~ "new_york"),
+    state = case_when(
+      state == "NY" ~ "ny"),
+    metro_states = case_when(
+      metro_states == " NY-NJ-PA" ~ "ny-nj-pa"),
     across(year:day, as.integer),
     month = factor(
       month,
       levels = 1:12,
       labels = tolower(month.abb))) |> 
-  rename(zip = region_name) |> 
+  rename(zip_code = region_name, county = county_name) |> 
   select(-region_type, -state_name) |> 
   relocate(
-    zip, city, county_name, 
-    state, year, 
-    month, day, rental_price)
+    zip_code, county, year, 
+    month, day, rental_price, everything())
 ```
 
