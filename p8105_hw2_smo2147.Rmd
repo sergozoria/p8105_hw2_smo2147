@@ -375,7 +375,7 @@ One reason zip codes might be missing in the **`zillow_zori_df`** dataset but no
 
 ###### Rental Prices Comparison 2021 vs 2020
 
-```{r}
+```{r setting variables for rental price comparison}
 jan_2020 = zillow_joined_df |> 
   filter(year == 2020, month == "jan") |> 
   select(zip_code, county, neighborhood, rental_price) |>
