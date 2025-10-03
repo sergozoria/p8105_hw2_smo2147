@@ -327,7 +327,43 @@ zillow_zori_df =
 
 #### Merging Zillow Datasets
 
+```{r merging zillow datasets}
+zillow_joined_df =
+  zillow_zori_df |>
+  left_join(
+    zillow_codes_df |>
+      select(zip_code, county, neighborhood) |>
+      distinct(),
+    by = c("zip_code", "county"),
+    relationship = "many-to-many"
+  ) |>
+  arrange(zip_code, year, month, day)
+```
+
+#### Checking for NA Neighborhoods
+
+```{r checking for NA neighborhoods}
+zillow_joined_df |> 
+  filter(is.na(neighborhood)) |> 
+  count()
+```
+
+###### Checking for Duplicates per Zipcode
+
+```{r checking for duplicates per zipcode}
+zillow_joined_df |> 
+  count(zip_code, year, month, day) |> 
+  filter(n > 1)
+```
+
+###### Describing Tidy Dataset
+
+The final **`zillow_joined_df`** dataset contains **`r nrow(zillow_joined_df)`** observations and **`r ncol(zillow_joined_df)`**. The dataset also contains **`r zillow_joined_df |> distinct(zip_code) |> nrow()`** unique zipcodes and **`r zillow_joined_df |> distinct(neighborhood) |> nrow()`** unique neighborhoods. 
+
+###### Differences in Zip Zodes by Dataset
+
 ```{r}
 
 ```
+
 
