@@ -402,3 +402,4 @@ knitr::kable(
 )
 ```
 
+In the table above we see that the top 10 zip codes with the largest rental price drops between January of 2020 and 2021. We can see that these zip codes are located in Manhattan. Price drops might be due to people moving out of NYC during the pandemic, which made prices go down to incentize people to move into those zip codes.
