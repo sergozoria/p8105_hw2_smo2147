@@ -395,6 +395,10 @@ large_rental_drop = rental_price_diff |>
   arrange(change) |> 
   slice_head(n = 10)
 
-large_rental_drop
+knitr::kable(
+  large_rental_drop,
+  caption = "Top 10 ZIP codes by Largest Rental Price Drop (Jan 2020 v. Jan 2021",
+  digits = 2
+)
 ```
 
